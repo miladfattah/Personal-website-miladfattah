@@ -43,10 +43,12 @@
         <p class="" dir="ltr">
           &copy;2022
           ,
-          Built with Laravel , 
-          <a href="" class="text-green-700">Vue3js </a> 
+          made with 
+          <a href="https://laravel.com/" class="text-red-900">Laravel</a>
+           , 
+          <a href="https://v3.vuejs.org" class="text-green-700">Vue3js </a> 
            and
-          <a href="" class="text-blue-600">TailwindCSS</a> 
+          <a href="https://tailwindcss.com/" class="text-blue-600">TailwindCSS</a> 
            
         </p>
       </div>
