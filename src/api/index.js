@@ -1,5 +1,5 @@
 import axios from 'axios' 
 let personalApi = axios.create({
-    baseURL : 'https://jsonplaceholder.typicode.com/' ,
+    baseURL : 'http://localhost:8000/api/' ,
 })
 export default personalApi ;

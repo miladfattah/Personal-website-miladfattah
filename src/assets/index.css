@@ -112,8 +112,14 @@
 .router-link-active svg path 
 {
     color: #fff !important;
-    fill :  #fff ;
+    fill :  #fff  !important ;
 }
+.router-link-active svg.stroke ,
+.router-link-active svg.stroke path {
+    stroke: #fff !important;
+    fill : none !important ;
+}
+
   
 .gradient__text {
     background: var(--gradient-text);

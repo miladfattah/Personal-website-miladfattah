@@ -1,23 +1,23 @@
 <template>
 <div class="shadow-sm p-4 flex flex-col bg-white rounded h-full">
-    <router-link to="/articles/slug" class="rounded flex w-full md:h-40 sm:h-60 h-44 overflow-hidden" href="/articles/relationships-in-database">
-        <img :src="img" class="w-full h-full">
+    <router-link :to="{path : `/articles/${slug}` , params : { slug }}" class="rounded flex w-full md:h-40 sm:h-60 h-44 overflow-hidden" href="/articles/relationships-in-database">
+        <img :src="'http://localhost:8000' + img" class="w-full h-full">
     </router-link>
 
    <div class="flex flex-col flex-1">
         <div class="flex flex-col flex-grow">
             <h4 class="mt-3 mb-4 ">
-                <router-link to="/articles/slug" class="font-bold text-sm  text-justify transition duration-200 hover:text-gray-900 text-gray-800 h-16 overflow-hidden" >
+                <router-link :to="`/articles/${slug}`" class="font-bold text-sm  text-justify transition duration-200 hover:text-gray-900 text-gray-800 h-16 overflow-hidden" >
                   {{title}}
                 </router-link>
             </h4>
-            <p>{{description}}</p>
+            <p v-html="small_description"></p>
         </div>
 
         <div>
             <div class="flex items-center justify-between mb-4">
                 <div class="flex items-center justify-between">
-                    <img class="rounded-full w-6 h-6 object-cover ml-1" :src="userImage" >
+                    <img class="rounded-full w-6 h-6 object-cover ml-1" :src="'http://localhost:8000' + user_avatar" >
                     <h6>
                         <span class="text-gray-400 font-semibold  text-xs transition duration-200 hover:text-gray-800"> {{userName}} </span>
                     </h6>
@@ -37,12 +37,12 @@
 
             <div class="flex items-center justify-between">
                 <div class="flex items-center">
-                     <button   class="flex group items-center px-1 h-5 ml-2 text-xs text-red-450 bg-red-700 bg-opacity-10 rounded transition duration-200 hover:bg-opacity-100 hover:text-white">
+                     <!-- <button   class="flex group items-center px-1 h-5 ml-2 text-xs text-red-450 bg-red-700 bg-opacity-10 rounded transition duration-200 hover:bg-opacity-100 hover:text-white">
                         <svg class="ml-1 -mt-0.5" fill="none" height="11" viewBox="0 0 13 11" xmlns="http://www.w3.org/2000/svg">
                            <path class="stroke-current transition duration-200 text-red-450 group-hover:text-white" d="M3.95035 1.229C4.81955 1.229 5.61243 1.66166 6.21284 2.15457C6.81326 1.66166 7.60614 1.229 8.47534 1.229C10.3497 1.229 11.8691 2.62275 11.8691 4.34192C11.8691 7.80824 7.92382 9.82702 6.62321 10.3984C6.36123 10.5134 6.06445 10.5134 5.80248 10.3984C4.50187 9.827 0.556602 7.80816 0.556602 4.34184C0.556602 2.62267 2.07603 1.229 3.95035 1.229Z" stroke="#E81C4D" stroke-width="0.761705"></path>
                         </svg>
                         1
-                     </button>
+                     </button> -->
                     
                </div>
 
@@ -61,13 +61,9 @@
 
 <script>
 export default {
-    props : ['time' ,'rank' , 'userImage' , 'userName' , 'description' , 'title' , 'img'],
+    props : ['time' ,'rank' ,'slug' , 'user_avatar' , 'userName' , 'description' , 'title' , 'img' , 'small_description'],
     setup(){
 
     }
 }
 </script>
-
-<style>
-
-</style>
