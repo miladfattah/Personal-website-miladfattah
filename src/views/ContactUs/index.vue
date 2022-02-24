@@ -4,9 +4,9 @@
       
          <div class=" gradient__bg backgournd_shadow rounded-xl px-4 sm:px-12 py-4 grid grid-rows-[auto,1fr]">
             <div class="grid sm:grid-cols-3 mb-3">
-               <div><span class=" text-gray-500">آدرس : </span></div>
-               <div><span class=" text-gray-500">تلفن:</span></div>
-               <div><span class=" text-gray-500">ایمیل:</span></div>
+               <div class="text-gray-100 font-bold"><span class=" text-gray-500 ml-2">آدرس : </span>{{settings.address}}</div>
+               <div class="text-gray-100 font-bold"><span class=" text-gray-500 ml-2">تلفن : </span>{{settings.phone}}</div>
+               <div class="text-gray-100 font-bold"><span class=" text-gray-500 ml-2">ایمیل : </span>{{settings.email}}</div>
             </div>
             <div  class="bg-white rounded-md shadow-lg grid grid-cols-1 xl:grid-cols-2  justify-between overflow-hidden">
                <div class="flex-1 p-8">
@@ -22,20 +22,20 @@
                      <div class="flex flex-col sm:flex-row ">
                         <div class="flex flex-col flex-1 sm:space-x-3">
                            <label for="name" class="text-gray-400 mr-4 mt-2">نام</label>
-                           <input type="text" id="name" placeholder="نام خود را وارد کنید"  class="bg-gray-300  h-10 text-sm text-dark-550 focus:font-bold focus:outline-none  placeholder-gray-300 bg-opacity-10 rounded-md border border-gray-200 px-4 " >
+                           <input type="text" id="name" placeholder="نام خود را وارد کنید"  class="bg-gray-300  h-10 text-sm text-dark-550 focus:font-bold focus:outline-none  placeholder-gray-300 bg-opacity-10 rounded-md border border-gray-200 px-4 " required >
                         </div>
                         <div class="flex flex-col flex-1 ">
                            <label for="email" class="text-gray-400 mr-4 mt-2">ایمیل</label>
-                           <input type="email" id="email" placeholder="ایمیل خود را وارد کنید"  class="bg-gray-300 h-10 text-sm text-dark-550 focus:font-bold focus:outline-none  placeholder-gray-300 bg-opacity-10 rounded-md border border-gray-200 px-4 " >
+                           <input type="email" id="email" placeholder="ایمیل خود را وارد کنید"  class="bg-gray-300 h-10 text-sm text-dark-550 focus:font-bold focus:outline-none  placeholder-gray-300 bg-opacity-10 rounded-md border border-gray-200 px-4 " required>
                         </div>
                      </div>
                      <div class="flex flex-col ">
                         <label for="phone" class="text-gray-400 mr-4 mt-2">تلفن همراه</label>
-                        <input type="text" id="phone" placeholder="شماره تلفن خود را وارد کنید"  class="bg-gray-300 h-10 text-sm text-dark-550 focus:font-bold focus:outline-none  placeholder-gray-300 bg-opacity-10 rounded-md border border-gray-200 px-4 " >
+                        <input type="text" id="phone" placeholder="شماره تلفن خود را وارد کنید"  class="bg-gray-300 h-10 text-sm text-dark-550 focus:font-bold focus:outline-none  placeholder-gray-300 bg-opacity-10 rounded-md border border-gray-200 px-4 " required>
                      </div>
                      <div class="flex flex-col ">
                         <label for="message" class="text-gray-400 mr-4 mt-2">متن پیام</label>
-                        <textarea  id="message"  rows="10" class="bg-gray-300  h-24 max-h-24 text-sm text-dark-550 focus:font-bold focus:outline-none  placeholder-gray-300 bg-opacity-10 rounded-md border border-gray-200 px-4 py-2" placeholder="متن پیام خود را وارد کنید"></textarea>
+                        <textarea  id="message"  rows="10" class="bg-gray-300  h-24 max-h-24 text-sm text-dark-550 focus:font-bold focus:outline-none  placeholder-gray-300 bg-opacity-10 rounded-md border border-gray-200 px-4 py-2" placeholder="متن پیام خود را وارد کنید" required></textarea>
                      </div>
                      <div class="flex justify-end">
                         <button class="mt-6 bg-green-500 h-10  w-full sm:w-1/2 px-12 flex justify-center items-center text-white  rounded font-medium transition duration-200 hover:bg-green-600">
@@ -70,8 +70,28 @@
    </div>
 </template>
 
-<script>
-export default {
 
+<script>
+import personalApi from '../../api' 
+export default {
+    data(){
+      return {
+        settings : []
+      }
+    }, 
+    methods: {
+      getSettings(){
+        personalApi.get(`settings` )
+        .then(res =>{
+
+            this.settings = res.data.data[0] ;
+
+        })
+        .catch(err => console.log(err))
+      },
+    },
+    created(){
+      this.getSettings();
+    }
 }
 </script>

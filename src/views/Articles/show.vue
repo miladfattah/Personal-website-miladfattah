@@ -68,12 +68,10 @@ export default {
       },
       methods : {
          getArticles(){
-             console.log(this.$route.params.slug)
             this.loading = true ;
             personalApi.get(`show-article/${this.$route.params.slug}`)
             .then(res =>{
                this.article = res.data ;
-               console.log('articles' ,  this.article.data )
             })
             .catch(err => console.log(err))
             .finally(()=>this.loading = false );
