@@ -29,7 +29,7 @@
             </div>
 
             <div class="flex flex-col text-white px-10 mb-20 sm:mb-0 justify-center sm:mr-6 sm:flex-1">
-              <h2 class="text-2xl font-bold sm:text-3xl">{{settings.title}}</h2>
+              <h2 class="text-2xl font-bold sm:text-3xl">{{settings.title }}</h2>
               <h3 class="text-special-gray mb-2">{{settings.sub_title}}</h3>
               <p class="leading-5  sm:text-xl">
                   {{settings.description}}
