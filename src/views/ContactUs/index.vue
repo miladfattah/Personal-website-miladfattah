@@ -18,30 +18,30 @@
                         فرم تماس باما 
                      </span>
                   </h3>
-                  <form action="">
+                  <form @submit.prevent="sendMessage">
                      <div class="flex flex-col sm:flex-row ">
                         <div class="flex flex-col flex-1 sm:space-x-3">
                            <label for="name" class="text-gray-400 mr-4 mt-2">نام</label>
-                           <input type="text" id="name" placeholder="نام خود را وارد کنید"  class="bg-gray-300  h-10 text-sm text-dark-550 focus:font-bold focus:outline-none  placeholder-gray-300 bg-opacity-10 rounded-md border border-gray-200 px-4 " required >
+                           <input v-model="form.username" type="text" id="name" placeholder="نام خود را وارد کنید"  class="bg-gray-300  h-10 text-sm text-dark-550 focus:font-bold focus:outline-none  placeholder-gray-300 bg-opacity-10 rounded-md border border-gray-200 px-4 " required >
                         </div>
                         <div class="flex flex-col flex-1 ">
                            <label for="email" class="text-gray-400 mr-4 mt-2">ایمیل</label>
-                           <input type="email" id="email" placeholder="ایمیل خود را وارد کنید"  class="bg-gray-300 h-10 text-sm text-dark-550 focus:font-bold focus:outline-none  placeholder-gray-300 bg-opacity-10 rounded-md border border-gray-200 px-4 " required>
+                           <input v-model="form.email" type="email" id="email" placeholder="ایمیل خود را وارد کنید"  class="bg-gray-300 h-10 text-sm text-dark-550 focus:font-bold focus:outline-none  placeholder-gray-300 bg-opacity-10 rounded-md border border-gray-200 px-4 " required>
                         </div>
                      </div>
                      <div class="flex flex-col ">
                         <label for="phone" class="text-gray-400 mr-4 mt-2">تلفن همراه</label>
-                        <input type="text" id="phone" placeholder="شماره تلفن خود را وارد کنید"  class="bg-gray-300 h-10 text-sm text-dark-550 focus:font-bold focus:outline-none  placeholder-gray-300 bg-opacity-10 rounded-md border border-gray-200 px-4 " required>
+                        <input v-model="form.phone" type="text" id="phone" placeholder="شماره تلفن خود را وارد کنید"  class="bg-gray-300 h-10 text-sm text-dark-550 focus:font-bold focus:outline-none  placeholder-gray-300 bg-opacity-10 rounded-md border border-gray-200 px-4 " required>
                      </div>
                      <div class="flex flex-col ">
                         <label for="message" class="text-gray-400 mr-4 mt-2">متن پیام</label>
-                        <textarea  id="message"  rows="10" class="bg-gray-300  h-24 max-h-24 text-sm text-dark-550 focus:font-bold focus:outline-none  placeholder-gray-300 bg-opacity-10 rounded-md border border-gray-200 px-4 py-2" placeholder="متن پیام خود را وارد کنید" required></textarea>
+                        <textarea v-model="form.message" id="message"  rows="10" class="bg-gray-300  h-24 max-h-24 text-sm text-dark-550 focus:font-bold focus:outline-none  placeholder-gray-300 bg-opacity-10 rounded-md border border-gray-200 px-4 py-2" placeholder="متن پیام خود را وارد کنید" required></textarea>
                      </div>
-                     <div class="flex justify-end">
-                        <button class="mt-6 bg-green-500 h-10  w-full sm:w-1/2 px-12 flex justify-center items-center text-white  rounded font-medium transition duration-200 hover:bg-green-600">
+                     <div class="flex flex-col justify-between items">
+                        <button v-if=" !loading " class="mt-6 bg-green-500 h-10  w-full sm:w-1/2 px-12 flex justify-center items-center text-white  rounded font-medium transition duration-200 hover:bg-green-600">
                               ارسال پیام                 
                         </button>
-                        <button style=" display : none " class="mt-6 bg-green-500 h-10  w-full sm:w-1/2 px-12 flex justify-center items-center text-white  rounded font-medium transition duration-200">
+                        <button v-else  class="mt-6 bg-green-500 h-10  w-full sm:w-1/2 px-12 flex justify-center items-center text-white  rounded font-medium transition duration-200">
                            <svg class="w-5 h-5" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="25 25 50 50">
                               <circle class="stroke-current text-white text-opacity-30" cx="50" cy="50" r="20" fill="none" stroke-width="8" stroke-linecap="round" stroke-dashoffset="0" stroke-dasharray="200, 300">
                               </circle>
@@ -52,6 +52,7 @@
                               </circle>
                            </svg>                        
                         </button>
+                        <small v-if="error" class="text-red-600 mt-2 " >○ &ThinSpace; پیام شما ارسال نشد</small>
                      </div>
                   </form>
                </div>
@@ -76,7 +77,15 @@ import personalApi from '../../api'
 export default {
     data(){
       return {
-        settings : []
+        settings : [],
+        form : {
+           username : '' , 
+           email : '' , 
+           phone : '' , 
+           message : '' 
+        }, 
+        loading : false ,
+        error : false 
       }
     }, 
     methods: {
@@ -89,6 +98,21 @@ export default {
         })
         .catch(err => console.log(err))
       },
+      sendMessage(){
+         this.loading = true ;
+            this.error = false ;
+           personalApi.post('contact-us' , this.form)
+            .then(res => {
+               console.log(res)
+
+                 this.loading = false ;
+            })
+            .catch(err => {
+               this.loading = false ;
+               this.error = true ;
+               console.log(err)
+            })
+      }
     },
     created(){
       this.getSettings();
